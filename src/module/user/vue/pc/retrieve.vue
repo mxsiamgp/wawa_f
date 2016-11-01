@@ -8,14 +8,14 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group" :class="{ 'has-error': $validation.name.invalid }">
-                                    <label for="field-name">用户名</label>
-                                    <input class="form-control" id="field-name" v-model="form.name">
+                                    <label>用户名</label>
+                                    <input class="form-control" v-model="form.name">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group" :class="{ 'has-error': $validation.nickname.invalid }">
-                                    <label for="field-nickname">昵称</label>
-                                    <input class="form-control" id="field-nickname" v-model="form.nickname">
+                                    <label>昵称</label>
+                                    <input class="form-control" v-model="form.nickname">
                                 </div>
                                 <div class="clearfix">
                                     <button class="btn btn-primary pull-right" type="submit" :disabled="$validation.invalid || !hasPermissions(['USER.RETRIEVE'])" v-loading-button="isRetrieveInProgress">检索</button>

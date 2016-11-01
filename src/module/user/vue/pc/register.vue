@@ -6,32 +6,32 @@
                 <validator name="validation">
                     <form @submit.prevent="register">
                         <div class="form-group" :class="{ 'has-error': $validation.kind.invalid }">
-                            <label for="field-kind">用户类型</label>
-                            <select class="form-control" id="field-kind" v-validate:kind="['required']" v-model="form.kind">
+                            <label>用户类型</label>
+                            <select class="form-control" v-validate:kind="['required']" v-model="form.kind">
                                 <option value="NORMAL_USER">普通用户</option>
                                 <option value="MANAGER">管理员</option>
                             </select>
                         </div>
                         <div class="form-group" :class="{ 'has-error': $validation.name.invalid }">
-                            <label for="field-name">用户名</label>
-                            <input class="form-control" id="field-name" placeholder="1-20位任意字符串" v-validate:name="{ required: true, maxlength: 20 }" v-model="form.name">
+                            <label>用户名</label>
+                            <input class="form-control" placeholder="1-20位任意字符串" v-validate:name="{ required: true, maxlength: 20 }" v-model="form.name">
                         </div>
                         <div class="form-group" :class="{ 'has-error': $validation.password.invalid }">
-                            <label for="field-password">密码</label>
-                            <input class="form-control" type="password" id="field-password" placeholder="1-30位任意字符串" v-validate:password="{ required: true, maxlength: 30 }" v-model="form.password">
+                            <label>密码</label>
+                            <input class="form-control" type="password" placeholder="1-30位任意字符串" v-validate:password="{ required: true, maxlength: 30 }" v-model="form.password">
                         </div>
                         <div class="form-group" :class="{ 'has-error': $validation.nickname.invalid }">
-                            <label for="field-nickname">昵称</label>
-                            <input class="form-control" id="field-nickname" placeholder="1-30位任意字符串" v-validate:nickname="{ required: true, maxlength: 30 }" v-model="form.nickname">
+                            <label>昵称</label>
+                            <input class="form-control" placeholder="1-30位任意字符串" v-validate:nickname="{ required: true, maxlength: 30 }" v-model="form.nickname">
                         </div>
                         <div class="form-group" :class="{ 'has-error': $validation.mobile.invalid }">
-                            <label for="field-mobile">手机</label>
-                            <input class="form-control" type="tel" id="field-mobile" placeholder="11位手机号码" v-validate:mobile="['required']" v-model="form.mobile">
+                            <label>手机</label>
+                            <input class="form-control" type="tel" placeholder="11位手机号码" v-validate:mobile="['required']" v-model="form.mobile">
                             <button class="btn btn-block" :class="{ disabled: sendMobileCaptchaCountdownButton.disabled }" type="button" :disabled="$validation.mobile.invalid || sendMobileCaptchaCountdownButton.disabled" v-countdown-button:send-mobile-captcha-countdown-button="{ interval: 60, action: sendMobileCaptcha }">发送验证码<span v-if="!!sendMobileCaptchaCountdownButton.timeout"> ({{sendMobileCaptchaCountdownButton.timeout}})</span></button>
                         </div>
                         <div class="form-group" :class="{ 'has-error': $validation.mobileCaptchaCode.invalid }">
-                            <label for="field-mobile-captcha-code">验证码</label>
-                            <input class="form-control" id="field-mobile-captcha-code" v-validate:mobile-captcha-code="['required']" v-model="form.mobileCaptchaCode">
+                            <label>验证码</label>
+                            <input class="form-control" v-validate:mobile-captcha-code="['required']" v-model="form.mobileCaptchaCode">
                         </div>
                         <div>
                             <button class="btn btn-warning btn-block" type="submit" :disabled="$validation.invalid" v-loading-button="isInProgress">注册</button>

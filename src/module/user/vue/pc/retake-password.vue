@@ -6,17 +6,17 @@
                 <validator name="validation">
                     <form @submit.prevent="update">
                         <div class="form-group" :class="{ 'has-error': $validation.name.invalid }">
-                            <label for="field-name">用户名</label>
-                            <input class="form-control" id="field-name" v-validate:name="{ required: true }" v-model="form.name">
+                            <label>用户名</label>
+                            <input class="form-control" v-validate:name="{ required: true }" v-model="form.name">
                             <button class="btn btn-block" :class="{ disabled: sendMobileCaptchaCountdownButton.disabled }" type="button" :disabled="$validation.name.invalid || sendMobileCaptchaCountdownButton.disabled" v-countdown-button:send-mobile-captcha-countdown-button="{ interval: 60, action: sendMobileCaptcha }">发送验证码<span v-if="!!sendMobileCaptchaCountdownButton.timeout"> ({{sendMobileCaptchaCountdownButton.timeout}})</span></button>
                         </div>
                         <div class="form-group" :class="{ 'has-error': $validation.mobileCaptchaCode.invalid }">
-                            <label for="field-mobile-captcha-code">验证码</label>
-                            <input class="form-control" id="field-mobile-captcha-code" v-validate:mobile-captcha-code="['required']" v-model="form.mobileCaptchaCode">
+                            <label>验证码</label>
+                            <input class="form-control" v-validate:mobile-captcha-code="['required']" v-model="form.mobileCaptchaCode">
                         </div>
                         <div class="form-group" :class="{ 'has-error': $validation.password.invalid }">
-                            <label for="field-password">密码</label>
-                            <input class="form-control" type="password" id="field-password" placeholder="1-30位任意字符串" v-validate:password="{ required: true, maxlength: 30 }" v-model="form.password">
+                            <label>密码</label>
+                            <input class="form-control" type="password" placeholder="1-30位任意字符串" v-validate:password="{ required: true, maxlength: 30 }" v-model="form.password">
                         </div>
                         <div>
                             <button class="btn btn-primary btn-block" type="submit" :disabled="$validation.invalid" v-loading-button="isInProgress">修改</button>

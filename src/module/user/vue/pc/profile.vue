@@ -7,8 +7,8 @@
                 <validator name="validation">
                     <form @submit.prevent="update">
                         <div class="form-group" :class="{ 'has-error': $validation.nickname.invalid }">
-                            <label for="field-nickname">昵称</label>
-                            <input class="form-control" id="field-nickname" v-validate:nickname="{ required: true, maxlength: 30 }" v-model="updateForm.nickname">
+                            <label>昵称</label>
+                            <input class="form-control" v-validate:nickname="{ required: true, maxlength: 30 }" v-model="updateForm.nickname">
                         </div>
                         <div class="clearfix">
                             <button class="btn btn-primary pull-right" type="submit" :disabled="$validation.invalid" v-loading-button="isUpdateInProgress">保存</button>
@@ -23,8 +23,8 @@
                 <validator name="passwordValidation">
                     <form @submit.prevent="updatePassword">
                         <div class="form-group" :class="{ 'has-error': $passwordValidation.password.invalid }">
-                            <label for="field-password">密码</label>
-                            <input class="form-control" type="password" id="field-password" v-validate:password="{ required: true, maxlength: 30 }" v-model="updatePasswordForm.password">
+                            <label>密码</label>
+                            <input class="form-control" type="password" v-validate:password="{ required: true, maxlength: 30 }" v-model="updatePasswordForm.password">
                         </div>
                         <div class="clearfix">
                             <button class="btn btn-primary pull-right" type="submit" :disabled="$passwordValidation.invalid" v-loading-button="isUpdatePasswordInProgress">保存</button>

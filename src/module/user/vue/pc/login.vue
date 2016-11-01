@@ -6,12 +6,12 @@
                 <validator name="validation">
                     <form @submit.prevent="login">
                         <div class="form-group" :class="{ 'has-error': $validation.name.invalid }">
-                            <label for="field-name">用户名</label>
-                            <input class="form-control" id="field-name" v-validate:name="{ required: true }" v-model="form.name">
+                            <label>用户名</label>
+                            <input class="form-control" v-validate:name="{ required: true }" v-model="form.name">
                         </div>
                         <div class="form-group" :class="{ 'has-error': $validation.password.invalid }">
-                            <label for="field-password">密码</label>
-                            <input class="form-control" type="password" id="field-password" v-validate:password="{ required: true }" v-model="form.password">
+                            <label>密码</label>
+                            <input class="form-control" type="password" v-validate:password="{ required: true }" v-model="form.password">
                         </div>
                         <div>
                             <button class="btn btn-warning btn-block" type="submit" :disabled="$validation.invalid" v-loading-button="isInProgress">登录</button>
