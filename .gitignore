@@ -1,0 +1,11 @@
+# IDEA
+.idea/
+*.iml
+
+# Node
+node_modules/
+
+# Project
+build/
+config/**/*
+!config/default.json

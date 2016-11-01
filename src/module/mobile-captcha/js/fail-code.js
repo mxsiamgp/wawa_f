@@ -1,0 +1,10 @@
+'use strict';
+
+// 错误代码
+export default {
+    // 发送验证码失败
+    SEND_MOBILE_CAPTCHA_FAIL: "MOBILE_CAPTCHA.SEND_MOBILE_CAPTCHA_FAIL",
+
+    // 验证码错误
+    INCORRECT_MOBILE_CAPTCHA: "MOBILE_CAPTCHA.INCORRECT_MOBILE_CAPTCHA"
+};

@@ -1,0 +1,17 @@
+{
+  "appId": "wawa",
+  "isCompress": false,
+  "serve": {
+    "port": 80
+  },
+  "upload": {
+    "qiniu": {}
+  },
+  "title": "Love WaWa!",
+  "module": {
+    "rest_json_rpc": {
+      "hostname": "localhost",
+      "port": 80
+    }
+  }
+}

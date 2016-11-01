@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <title><!-- @echo config.title --></title>
+</head>
+<body>
+<router-view></router-view>
+<toast :show.sync="alert.isShown" type="text">{{alert.message}}</toast>
+<script src="../js/entry.js"></script>
+</body>
+</html>
