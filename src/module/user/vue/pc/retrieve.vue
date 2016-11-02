@@ -1,5 +1,4 @@
 <template>
-    <h1 class="header-dividing">用户管理</h1>
     <div class="panel">
         <div class="panel-heading">
             <validator name="validation">
