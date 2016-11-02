@@ -8,8 +8,7 @@
                         <div class="form-group" :class="{ 'has-error': $validation.kind.invalid }">
                             <label>用户类型</label>
                             <select class="form-control" v-validate:kind="['required']" v-model="form.kind">
-                                <option value="NORMAL_USER">普通用户</option>
-                                <option value="MANAGER">管理员</option>
+                                <option value="ANONYMOUS_USER">匿名用户</option>
                             </select>
                         </div>
                         <div class="form-group" :class="{ 'has-error': $validation.name.invalid }">
@@ -53,7 +52,7 @@
         data() {
             return {
                 form: {
-                    kind: 'NORMAL_USER',
+                    kind: 'ANONYMOUS_USER',
                     name: '',
                     password: '',
                     nickname: '',

@@ -2,6 +2,9 @@
 
 // 错误代码
 export default {
+    // 不能删除主办方管理员
+    CANNOT_DELETE_SPONSOR_MANAGER: "USER.CANNOT_DELETE_SPONSOR_MANAGER",
+
     // 名称重复
     DUPLICATE_USER_NAME: "USER.DUPLICATE_USER_NAME",
 

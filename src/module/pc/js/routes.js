@@ -1,5 +1,6 @@
 'use strict';
 
+import merchantRoutes from '../../merchant/js/pc/routes';
 import userRoutes from '../../user/js/pc/routes';
 
 /*
@@ -18,5 +19,6 @@ import userRoutes from '../../user/js/pc/routes';
  };
  */
 export default [
+    merchantRoutes,
     userRoutes
 ];

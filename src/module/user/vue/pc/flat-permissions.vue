@@ -41,7 +41,40 @@
             return {
                 flatPermissionClasses: [
                     {
-                        name: '用户管理',
+                        name: '验票员管理',
+                        flatPermissions: [
+                            {
+                                name: '验票',
+                                value: 'TICKET.INSPECT'
+                            }
+                        ]
+                    },
+                    {
+                        name: '商家员工管理',
+                        flatPermissions: [
+                            {
+                                name: '检索',
+                                value: 'USER.MERCHANT_STAFF.RETRIEVE'
+                            }, {
+                                name: '修改',
+                                value: 'USER.MERCHANT_STAFF.MODIFY'
+                            }
+                        ]
+                    },
+                    {
+                        name: '商家管理',
+                        flatPermissions: [
+                            {
+                                name: '检索',
+                                value: 'MERCHANT.RETRIEVE'
+                            }, {
+                                name: '修改',
+                                value: 'MERCHANT.MODIFY'
+                            }
+                        ]
+                    },
+                    {
+                        name: '所有用户管理',
                         flatPermissions: [
                             {
                                 name: '检索',
