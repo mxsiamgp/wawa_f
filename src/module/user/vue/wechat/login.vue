@@ -1,5 +1,5 @@
 <template>
-    <group title="用户注册">
+    <group title="用户登录">
         <form @submit.prevent="login">
             <x-input title="用户名" :value.sync="form.name" v-ref:name></x-input>
             <x-input title="密码" type="password" :value.sync="form.password" v-ref:password></x-input>

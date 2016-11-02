@@ -1,5 +1,5 @@
 <template>
-    <h1 class="header-dividing">用户注册</h1>
+    <h1 class="header-dividing">用户登录</h1>
     <div class="container">
         <div class="row">
             <div class="col-lg-offset-3 col-lg-6">
