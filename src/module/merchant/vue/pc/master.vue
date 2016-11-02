@@ -1,4 +1,5 @@
 <template>
+    <h1 class="header-dividing">商家管理</h1>
     <retrieve></retrieve>
 </template>
 <script>
