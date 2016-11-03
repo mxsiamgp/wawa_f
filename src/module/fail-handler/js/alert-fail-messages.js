@@ -7,8 +7,8 @@ import UserFailCode from '../../user/js/fail-code';
 
 const M = module.exports;
 
-M[MobileCaptchaFailCode.INCORRECT_MOBILE_CAPTCHA] = '发送验证码失败';
-M[MobileCaptchaFailCode.SEND_MOBILE_CAPTCHA_FAIL] = '验证码错误';
+M[MobileCaptchaFailCode.INCORRECT_MOBILE_CAPTCHA] = '验证码错误';
+M[MobileCaptchaFailCode.SEND_MOBILE_CAPTCHA_FAIL] = '发送验证码失败';
 
 M[OrderFailCode.FAIL_CD_CREATE_WECHAT_PAY_ORDER_FAIL] = '创建微信支付订单失败';
 M[OrderFailCode.FAIL_CD_NO_SUCH_ORDER] = '订单不存在';
