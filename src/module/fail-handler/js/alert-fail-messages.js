@@ -12,8 +12,8 @@ M[MerchantFailCode.DUPLICATE_MERCHANT_NAME] = '商家店名重复';
 M[MerchantFailCode.NO_SUCH_MANAGER_USER] = '管理员用户不存在';
 M[MerchantFailCode.MANAGER_USER_IS_BOUND] = '管理员用户已经绑定了商家';
 
-M[MobileCaptchaFailCode.INCORRECT_MOBILE_CAPTCHA] = '发送验证码失败';
-M[MobileCaptchaFailCode.SEND_MOBILE_CAPTCHA_FAIL] = '验证码错误';
+M[MobileCaptchaFailCode.INCORRECT_MOBILE_CAPTCHA] = '验证码错误';
+M[MobileCaptchaFailCode.SEND_MOBILE_CAPTCHA_FAIL] = '发送验证码失败';
 
 M[OrderFailCode.FAIL_CD_CREATE_WECHAT_PAY_ORDER_FAIL] = '创建微信支付订单失败';
 M[OrderFailCode.FAIL_CD_NO_SUCH_ORDER] = '订单不存在';
