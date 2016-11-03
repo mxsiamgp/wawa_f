@@ -25,22 +25,18 @@
                 <thead>
                 <tr>
                     <th>商家店名</th>
-                    <th>经营项目</th>
+                    <th>管理员用户名</th>
                     <th>联系人姓名</th>
                     <th>联系人手机号码</th>
-                    <th>联系人身份证号码</th>
-                    <th>联系人地址</th>
                     <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="merchant in merchants">
                     <td>{{merchant.name}}</td>
-                    <td>{{merchant.itemsOfBusiness}}</td>
+                    <td>{{merchant.managerUserName}}</td>
                     <td>{{merchant.contactsName}}</td>
                     <td>{{merchant.contactsMobile}}</td>
-                    <td>{{merchant.contactsIdCard}}</td>
-                    <td>{{merchant.contactsAddress}}</td>
                     <td>
                         <button class="btn btn-primary btn-sm" :disabled="!hasPermissions(['MERCHANT.MODIFY'])" @click.prevent="edit(merchant.id)">编辑</button>
                         <button class="btn btn-danger btn-sm" :disabled="!hasPermissions(['MERCHANT.MODIFY'])" v-confirm-button="{ confirm: $refs.deleteConfirmModal, action: deleteCarried(merchant) }">删除</button>
@@ -65,6 +61,7 @@
     import Vue from 'vue';
     import _ from 'lodash';
 
+    import CurrentUserMixin from '../../../user/js/current-user-mixin';
     import RPC from '../../../rest-json-rpc/js/rest-json-rpc';
     import Edit from './edit.vue';
     import Register from './register.vue';
@@ -73,6 +70,8 @@
     let lastForm = null;
 
     export default {
+        mixins: [CurrentUserMixin()],
+
         data() {
             return {
                 form: {

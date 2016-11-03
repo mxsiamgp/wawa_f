@@ -1,11 +1,16 @@
 'use strict';
 
+import MerchantFailCode from '../../merchant/js/fail-code';
 import MobileCaptchaFailCode from '../../mobile-captcha/js/fail-code';
 import OrderFailCode from '../../order/js/fail-code';
 import RestJsonRpcFailCode from '../../rest-json-rpc/js/fail-code';
 import UserFailCode from '../../user/js/fail-code';
 
 const M = module.exports;
+
+M[MerchantFailCode.DUPLICATE_MERCHANT_NAME] = '商家店名重复';
+M[MerchantFailCode.NO_SUCH_MANAGER_USER] = '管理员用户不存在';
+M[MerchantFailCode.MANAGER_USER_IS_BOUND] = '管理员用户已经绑定了商家';
 
 M[MobileCaptchaFailCode.INCORRECT_MOBILE_CAPTCHA] = '发送验证码失败';
 M[MobileCaptchaFailCode.SEND_MOBILE_CAPTCHA_FAIL] = '验证码错误';

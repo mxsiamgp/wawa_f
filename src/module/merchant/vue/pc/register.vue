@@ -13,6 +13,10 @@
                                 <label>商家店名</label>
                                 <input class="form-control" v-validate:name="{ required: true }" v-model="form.name">
                             </div>
+                            <div class="form-group" :class="{ 'has-error': $validation.managerUserName.invalid }">
+                                <label>管理员用户名</label>
+                                <input class="form-control" v-validate:manager-user-name="{ required: true }" v-model="form.managerUserName">
+                            </div>
                             <div class="form-group">
                                 <label>经营项目</label>
                                 <input class="form-control" v-model="form.itemsOfBusiness">
@@ -54,6 +58,7 @@
             return {
                 form: {
                     name: '',
+                    managerUserName: '',
                     itemsOfBusiness: '',
                     contactsName: '',
                     contactsMobile: '',
@@ -72,7 +77,7 @@
             register() {
                 const that = this;
                 that.isInProgress = true;
-                RPC.call('merchant.register', _.pick(that.form, ['name', 'itemsOfBusiness', 'contactsName', 'contactsMobile', 'contactsIdCard', 'contactsAddress']))
+                RPC.call('merchant.register', _.pick(that.form, ['name', 'managerUserName', 'itemsOfBusiness', 'contactsName', 'contactsMobile', 'contactsIdCard', 'contactsAddress']))
                         .always(() => {
                             that.isInProgress = false;
                         })
