@@ -27,7 +27,7 @@
         data() {
             return {
                 form: {
-                    kind: 'NORMAL_USER',
+                    kind: 'ANONYMOUS_USER',
                     name: '',
                     password: '',
                     nickname: '',
@@ -37,12 +37,8 @@
                 isInProgress: false,
                 kinds: [
                     {
-                        key: 'NORMAL_USER',
-                        value: '普通用户'
-                    },
-                    {
-                        key: 'MANAGER',
-                        value: '管理员'
+                        key: 'ANONYMOUS_USER',
+                        value: '匿名用户'
                     }
                 ]
             };
