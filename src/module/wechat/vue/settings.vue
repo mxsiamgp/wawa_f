@@ -3,7 +3,27 @@
         <cell title="基本信息" is-link v-link="{ path: '/console/user/wechat/update' }"></cell>
         <cell title="修改密码" is-link v-link="{ path: '/console/user/wechat/update-password' }"></cell>
     </group>
+    <group title="系统">
+        <cell title="注销" @click.prevent="logout"></cell>
+    </group>
 </template>
 <script>
-    export default {};
+    import RPC from '../../rest-json-rpc/js/rest-json-rpc';
+    import failHandler from '../../fail-handler/js/fail-handler';
+
+    export default {
+
+        methods: {
+            logout() {
+                const that = this;
+                RPC.call('user.logout', {})
+                        .then(failHandler(that))
+                        .then(() => {
+                            RPC.call('user.get_current_wechat_user', {})
+                                    .then(failHandler(that));
+                        });
+            }
+        }
+
+    };
 </script>
