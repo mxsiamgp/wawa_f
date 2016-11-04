@@ -54,10 +54,10 @@
                         flatPermissions: [
                             {
                                 name: '检索',
-                                value: 'USER.MERCHANT_STAFF.RETRIEVE'
+                                value: 'MERCHANT.STAFF.RETRIEVE'
                             }, {
                                 name: '修改',
-                                value: 'USER.MERCHANT_STAFF.MODIFY'
+                                value: 'MERCHANT.STAFF.MODIFY'
                             }
                         ]
                     },

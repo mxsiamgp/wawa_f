@@ -9,6 +9,12 @@ export default [
                 link: {
                     path: '/console/merchant/pc/master'
                 }
+            },
+            {
+                name: '商家员工管理',
+                link: {
+                    path: '/console/merchant/pc/staff/master'
+                }
             }
         ]
     }

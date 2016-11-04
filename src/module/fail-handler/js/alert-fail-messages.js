@@ -8,9 +8,12 @@ import UserFailCode from '../../user/js/fail-code';
 
 const M = module.exports;
 
+M[MerchantFailCode.CANNOT_KICK_OUT_MANAGER] = '不能踢出管理员';
+M[MerchantFailCode.CURRENT_USER_UNBOUNDED_MERCHANTS] = '当前用户未绑定商家';
 M[MerchantFailCode.DUPLICATE_MERCHANT_NAME] = '商家店名重复';
-M[MerchantFailCode.NO_SUCH_MANAGER_USER] = '管理员用户不存在';
-M[MerchantFailCode.MANAGER_USER_IS_BOUND] = '管理员用户已经绑定了商家';
+M[MerchantFailCode.NO_SUCH_USER] = '用户不存在';
+M[MerchantFailCode.RESOURCE_NOT_BELONG_TO_CURRENT_MERCHANT] = '资源不隶属该商家';
+M[MerchantFailCode.USER_IS_BOUND] = '用户已经绑定了商家';
 
 M[MobileCaptchaFailCode.INCORRECT_MOBILE_CAPTCHA] = '验证码错误';
 M[MobileCaptchaFailCode.SEND_MOBILE_CAPTCHA_FAIL] = '发送验证码失败';

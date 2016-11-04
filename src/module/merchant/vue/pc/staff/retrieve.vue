@@ -7,12 +7,12 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group" :class="{ 'has-error': $validation.name.invalid }">
-                                    <label>商家店名</label>
+                                    <label>用户名</label>
                                     <input class="form-control" v-model="form.name">
                                 </div>
                                 <div class="clearfix">
-                                    <button class="btn btn-primary pull-right" type="submit" :disabled="$validation.invalid || !hasPermissions(['MERCHANT.RETRIEVE'])" v-loading-button="isRetrieveInProgress">检索</button>
-                                    <button class="btn btn-warning pull-right" :disabled="$validation.invalid || !hasPermissions(['MERCHANT.MODIFY'])" @click.prevent="register">注册</button>
+                                    <button class="btn btn-primary pull-right" type="submit" :disabled="$validation.invalid || !hasPermissions(['MERCHANT.STAFF.RETRIEVE'])" v-loading-button="isRetrieveInProgress">检索</button>
+                                    <button class="btn btn-warning pull-right" :disabled="$validation.invalid || !hasPermissions(['MERCHANT.STAFF.MODIFY'])" @click.prevent="pullInStaff">拉入</button>
                                 </div>
                             </div>
                         </div>
@@ -24,22 +24,17 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>商家店名</th>
-                    <th>管理员用户名</th>
-                    <th>联系人姓名</th>
-                    <th>联系人手机号码</th>
+                    <th>用户名</th>
+                    <th>昵称</th>
                     <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="merchant in merchants">
-                    <td>{{merchant.name}}</td>
-                    <td>{{merchant.managerUserName}}</td>
-                    <td>{{merchant.contactsName}}</td>
-                    <td>{{merchant.contactsMobile}}</td>
+                <tr v-for="user in users">
+                    <td>{{user.name}}</td>
+                    <td>{{user.nickname}}</td>
                     <td>
-                        <button class="btn btn-primary btn-sm" :disabled="!hasPermissions(['MERCHANT.MODIFY'])" @click.prevent="edit(merchant.id)">编辑</button>
-                        <button class="btn btn-danger btn-sm" :disabled="!hasPermissions(['MERCHANT.MODIFY'])" v-confirm-button="{ confirm: $refs.deleteConfirmModal, action: deleteCarried(merchant) }">删除</button>
+                        <button class="btn btn-danger btn-sm" :disabled="!hasPermissions(['MERCHANT.STAFF.MODIFY'])" v-confirm-button="{ confirm: $refs.kickOutStaffConfirmModal, action: kickOutStaffCarried(user) }">踢出</button>
                     </td>
                 </tr>
                 </tbody>
@@ -53,24 +48,23 @@
             </div>
         </div>
     </div>
-    <register v-ref:register></register>
-    <edit v-ref:edit></edit>
-    <confirm-modal title="提示" content="确认要删除这个商家？" v-ref:delete-confirm-modal></confirm-modal>
+    <pull-in-staff v-ref:pull-in-staff></pull-in-staff>
+    <confirm-modal title="提示" content="确认要踢出这个员工？" v-ref:kick-out-staff-confirm-modal></confirm-modal>
 </template>
 <script>
     import Vue from 'vue';
     import _ from 'lodash';
 
-    import CurrentUserMixin from '../../../user/js/current-user-mixin';
-    import RPC from '../../../rest-json-rpc/js/rest-json-rpc';
-    import Edit from './edit.vue';
-    import Register from './register.vue';
-    import failHandler from '../../../fail-handler/js/fail-handler';
+    import CurrentMerchantMixin from '../../../js/current-merchant-mixin';
+    import CurrentUserMixin from '../../../../user/js/current-user-mixin';
+    import PullInStaff from './pull-in-staff.vue';
+    import RPC from '../../../../rest-json-rpc/js/rest-json-rpc';
+    import failHandler from '../../../../fail-handler/js/fail-handler';
 
     let lastForm = null;
 
     export default {
-        mixins: [CurrentUserMixin()],
+        mixins: [CurrentUserMixin(), CurrentMerchantMixin],
 
         data() {
             return {
@@ -80,7 +74,7 @@
                 isRetrieveInProgress: false,
                 isNextInProgress: false,
                 lastId: null,
-                merchants: []
+                users: []
             };
         },
 
@@ -89,56 +83,58 @@
                 const that = this;
                 lastForm = _.cloneDeep(_.pick(that.form, ['name']));
                 that.lastId = null;
-                that.merchants = [];
+                that.users = [];
                 that.next('isRetrieveInProgress');
             },
 
             next(isInProgressProp) {
                 const that = this;
+
+                if (!that.currentMerchant) {
+                    that.$dispatch('alertFail', '当前用户未绑定商家');
+                    return;
+                }
+
                 Vue.set(that, isInProgressProp, true);
-                RPC.call('merchant.retrieve', _.merge(lastForm, {
-                    lastId: that.lastId
+                RPC.call('merchant.retrieve_staffs', _.merge(lastForm, {
+                    lastId: that.lastId,
+                    merchantId: that.currentMerchant.id
                 }))
                         .always(() => {
                             Vue.set(that, isInProgressProp, false);
                         })
                         .then(failHandler(that))
                         .then((res) => {
-                            const merchants = res.result;
-                            if (merchants.length) {
-                                that.lastId = _.last(merchants).id;
+                            const users = res.result;
+                            if (users.length) {
+                                that.lastId = _.last(users).id;
                             }
-                            that.merchants.push(...merchants);
+                            that.users.push(...users);
                         });
             },
 
-            deleteCarried(merchant) {
+            pullInStaff() {
+                this.$refs.pullInStaff.load();
+            },
+
+            kickOutStaffCarried(user) {
                 const that = this;
                 return (confirm) => {
-                    RPC.call('merchant.delete', {
-                        id: merchant.id
+                    RPC.call('merchant.kick_out_staff', {
+                        userId: user.id
                     })
                             .then(failHandler(that))
                             .then(() => {
-                                that.merchants.$remove(merchant);
-                                that.$dispatch('alertOk', '已删除');
+                                that.users.$remove(user);
+                                that.$dispatch('alertOk', '已踢出');
                                 confirm.close();
                             });
                 }
-            },
-
-            register() {
-                this.$refs.register.load();
-            },
-
-            edit(id) {
-                this.$refs.edit.load(id);
             }
         },
 
         components: {
-            Edit,
-            Register
+            PullInStaff
         }
     }
 </script>
