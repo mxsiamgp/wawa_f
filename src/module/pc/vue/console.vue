@@ -41,7 +41,6 @@
 
     import CurrentUserMixin from '../../user/js/current-user-mixin';
     import RPC from '../../rest-json-rpc/js/rest-json-rpc';
-    import StatusCode from '../../rest-json-rpc/js/status-code';
     import failHandler from '../../fail-handler/js/fail-handler';
     import functions from '../js/functions';
 
