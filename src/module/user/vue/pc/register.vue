@@ -5,12 +5,6 @@
             <div class="col-lg-offset-3 col-lg-6">
                 <validator name="validation">
                     <form @submit.prevent="register">
-                        <div class="form-group" :class="{ 'has-error': $validation.kind.invalid }">
-                            <label>用户类型</label>
-                            <select class="form-control" v-validate:kind="['required']" v-model="form.kind">
-                                <option value="ANONYMOUS_USER">匿名用户</option>
-                            </select>
-                        </div>
                         <div class="form-group" :class="{ 'has-error': $validation.name.invalid }">
                             <label>用户名</label>
                             <input class="form-control" placeholder="1-20位任意字符串" v-validate:name="{ required: true, maxlength: 20 }" v-model="form.name">

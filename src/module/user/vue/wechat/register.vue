@@ -1,7 +1,6 @@
 <template>
     <group title="用户注册">
         <form @submit.prevent="register">
-            <selector title="用户类型" :options="kinds" :value.sync="form.kind" v-ref:kind></selector>
             <x-input title="用户名" placeholder="1-20位任意字符串" :max="20" :value.sync="form.name" v-ref:name></x-input>
             <x-input title="密码"  type="password" placeholder="1-30位任意字符串" :max="30" :value.sync="form.password" v-ref:password></x-input>
             <x-input title="昵称" placeholder="1-30位任意字符串" :max="30" :value.sync="form.nickname" v-ref:nickname></x-input>
@@ -34,13 +33,7 @@
                     mobile: '',
                     mobileCaptchaCode: ''
                 },
-                isInProgress: false,
-                kinds: [
-                    {
-                        key: 'ANONYMOUS_USER',
-                        value: '匿名用户'
-                    }
-                ]
+                isInProgress: false
             };
         },
 
