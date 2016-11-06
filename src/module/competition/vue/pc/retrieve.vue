@@ -21,18 +21,21 @@
             </validator>
         </div>
         <div class="panel-body">
-            <table class="table table-striped">
+            <table class="table">
                 <thead>
                 <tr>
                     <th>赛事名</th>
+                    <th>状态</th>
                     <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="competition in competitions">
                     <td>{{competition.name}}</td>
+                    <td>{{competition.isFinished ? '完成' : '进行中'}}</td>
                     <td>
                         <a class="btn btn-primary btn-sm" :disabled="!hasPermissions(['COMPETITION.MODIFY'])" v-link="{ path: `/console/competition/${competition.id}/pc/edit` }">编辑</a>
+                        <button class="btn btn-success btn-sm" :disabled="!hasPermissions(['COMPETITION.MODIFY'])" v-confirm-button="{ confirm: $refs.finishConfirmModal, action: finishCarried(competition) }" v-if="!competition.isFinished">完成</button>
                         <button class="btn btn-danger btn-sm" :disabled="!hasPermissions(['COMPETITION.MODIFY'])" v-confirm-button="{ confirm: $refs.deleteConfirmModal, action: deleteCarried(competition) }">删除</button>
                     </td>
                 </tr>
@@ -47,6 +50,7 @@
             </div>
         </div>
     </div>
+    <confirm-modal title="提示" content="确认要完成这个赛事？" v-ref:finish-confirm-modal></confirm-modal>
     <confirm-modal title="提示" content="确认要删除这个赛事？" v-ref:delete-confirm-modal></confirm-modal>
 </template>
 <script>
@@ -97,6 +101,21 @@
                             }
                             that.competitions.push(...competitions);
                         });
+            },
+
+            finishCarried(competition) {
+                const that = this;
+                return (confirm) => {
+                    RPC.call('competition.finish', {
+                        id: competition.id
+                    })
+                            .then(failHandler(that))
+                            .then(() => {
+                                competition.isFinished = true;
+                                that.$dispatch('alertOk', '已完成');
+                                confirm.close();
+                            });
+                }
             },
 
             deleteCarried(competition) {
