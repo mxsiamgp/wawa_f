@@ -4,8 +4,8 @@
             <router-view></router-view>
         </div>
         <tabbar>
-            <tabbar-item v-link="{ path: '/console' }" :selected="$route.path === '/console'">
-                <span slot="label">控制台</span>
+            <tabbar-item v-link="{ path: '/console/competition/wechat/list' }" :selected="$route.path === '/console/competition/wechat/list'">
+                <span slot="label">门票购买</span>
             </tabbar-item>
             <tabbar-item v-link="{ path: '/console/order/wechat/my-orders' }" :selected="$route.path === '/console/order/wechat/my-orders'">
                 <span slot="label">我的订单</span>

@@ -22,7 +22,7 @@ const rootRoutes = {
         }
     },
     redirectRoutes: {
-        '/': '/console'
+        '/': '/console/competition/wechat/list'
     },
     consoleSubRoutes: {
         '/wechat/settings': {

@@ -12,7 +12,8 @@ import {
     TabbarItem,
     Toast,
     XButton,
-    XInput
+    XInput,
+    XNumber
 } from 'vux';
 
 Vue.component('box', Box);
@@ -26,3 +27,4 @@ Vue.component('tabbar-item', TabbarItem);
 Vue.component('toast', Toast);
 Vue.component('x-button', XButton);
 Vue.component('x-input', XInput);
+Vue.component('x-number', XNumber);
