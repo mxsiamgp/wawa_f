@@ -41,7 +41,7 @@
             return {
                 flatPermissionClasses: [
                     {
-                        name: '验票员管理',
+                        name: '验票',
                         flatPermissions: [
                             {
                                 name: '验票',
@@ -74,7 +74,19 @@
                         ]
                     },
                     {
-                        name: '所有用户管理',
+                        name: '赛事管理',
+                        flatPermissions: [
+                            {
+                                name: '检索',
+                                value: 'COMPETITION.RETRIEVE'
+                            }, {
+                                name: '修改',
+                                value: 'COMPETITION.MODIFY'
+                            }
+                        ]
+                    },
+                    {
+                        name: '用户管理',
                         flatPermissions: [
                             {
                                 name: '检索',
@@ -84,7 +96,7 @@
                                 value: 'USER.MODIFY'
                             }
                         ]
-                    }
+                    },
                 ],
                 flatPermissions: [],
                 isGrantInProgress: false,

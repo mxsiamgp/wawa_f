@@ -1,5 +1,6 @@
 'use strict';
 
+import competitionRoutes from '../../competition/js/pc/routes';
 import merchantRoutes from '../../merchant/js/pc/routes';
 import userRoutes from '../../user/js/pc/routes';
 
@@ -19,6 +20,7 @@ import userRoutes from '../../user/js/pc/routes';
  };
  */
 export default [
+    competitionRoutes,
     merchantRoutes,
     userRoutes
 ];

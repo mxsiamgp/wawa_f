@@ -2,6 +2,7 @@
 
 import _ from 'lodash';
 
+import competitionFunctions from '../../competition/js/pc/functions';
 import merchantFunctions from '../../merchant/js/pc/functions';
 import userFunctions from '../../user/js/pc/functions';
 
@@ -32,5 +33,6 @@ import userFunctions from '../../user/js/pc/functions';
  */
 export default _.flatten([
     merchantFunctions,
+    competitionFunctions,
     userFunctions
 ]);

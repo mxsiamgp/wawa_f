@@ -1,5 +1,6 @@
 'use strict';
 
+import CompetitionFailCode from '../../competition/js/fail-code';
 import MerchantFailCode from '../../merchant/js/fail-code';
 import MobileCaptchaFailCode from '../../mobile-captcha/js/fail-code';
 import OrderFailCode from '../../order/js/fail-code';
@@ -7,6 +8,8 @@ import RestJsonRpcFailCode from '../../rest-json-rpc/js/fail-code';
 import UserFailCode from '../../user/js/fail-code';
 
 const M = module.exports;
+
+M[CompetitionFailCode.DUPLICATE_COMPETITION_NAME] = '赛事名称重复';
 
 M[MerchantFailCode.CANNOT_KICK_OUT_MANAGER] = '不能踢出管理员';
 M[MerchantFailCode.CURRENT_USER_UNBOUNDED_MERCHANTS] = '当前用户未绑定商家';
