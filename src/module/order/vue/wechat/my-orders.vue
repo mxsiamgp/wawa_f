@@ -3,9 +3,9 @@
         <div class="weui_panel_hd">我的订单</div>
         <div class="weui_panel_bd">
             <div class="weui_media_box weui_media_text" v-for="order in orders">
-                <h4 class="weui_media_title">{{lodash.join(lodash.map(order.items, 'sellableValue'), ' / ')}}</h4>
+                <h4 class="weui_media_title">{{orderTitle(order)}}</h4>
                 <p class="weui_media_desc">
-                    {{moment(order.createdTime).tz('Asia/Shanghai').format('YYYY/MM/DD HH:mm:ss')}} {{OrderStatusMessage[order.status]}} <span style="font-weight: bold; color: red;">{{`￥${new BigNumber(order.totalPriceFee).dividedBy(100).toFormat(2)}`}}</span>
+                    {{moment(order.createdTime).tz('Asia/Shanghai').format('YYYY/MM/DD HH:mm:ss')}} {{OrderStatusMessage[order.status]}} <span style="font-weight: bold; color: red;">{{orderTotalPrice(order)}}</span>
                 </p>
                 <divider></divider>
                 <p>
@@ -67,6 +67,19 @@
         },
 
         methods: {
+            orderTotalPrice(order) {
+                return `￥${new BigNumber(order.totalPriceFee).dividedBy(100).toFormat(2)}`;
+            },
+
+            orderTitle(order) {
+                return _.join(_.map(order.items, (item) => {
+                    if (item.sellableType === 'COMPETITION.TICKET') {
+                        return JSON.parse(item.sellableValue).ticket_name;
+                    }
+                    throw new Error('未识别的订单项目类型');
+                }), '/');
+            },
+
             next(isNext) {
                 const that = this;
                 if (isNext) {

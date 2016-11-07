@@ -1,6 +1,6 @@
 <template>
     <group title="选择赛事">
-        <cell :title="competition.name" is-link v-link="{ path: `/console/competition/${competition.id}/wechat/ticket/list` }" v-for="competition in competitions"></cell>
+        <cell :title="competition.name" is-link v-link="ticketListLink(competition.id)" v-for="competition in competitions"></cell>
     </group>
 </template>
 <script>
@@ -12,6 +12,14 @@
             return {
                 competitions: []
             };
+        },
+
+        methods: {
+            ticketListLink(competitionId) {
+                return {
+                    path: `/console/competition/${competitionId}/wechat/ticket/list`
+                };
+            }
         },
 
         ready() {

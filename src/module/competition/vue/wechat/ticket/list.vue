@@ -60,6 +60,7 @@
                         })
                         .then(() => {
                             that.$dispatch('alertOk', '已创建订单');
+                            that.$router.replace('/console/order/wechat/my-orders');
                         });
             }
         },
