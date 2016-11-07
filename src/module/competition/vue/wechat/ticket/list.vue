@@ -46,7 +46,7 @@
                 that.isInProgress = true;
                 RPC.call('competition.create_order', {
                     competitionId: that.competition.id,
-                    items: _.filter(_.map(that.form.tickets, (quantity, ticketId) => {
+                    tickets: _.filter(_.map(that.form.tickets, (quantity, ticketId) => {
                         return {
                             ticketId,
                             quantity
