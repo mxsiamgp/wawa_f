@@ -1,16 +1,24 @@
 'use strict';
 
-import List from '../../vue/wechat/list.vue';
-import TicketList from '../../vue/wechat/ticket/list.vue';
+import BuyTicketListCompetition from '../../vue/wechat/buy-ticket/list-competition.vue';
+import BuyTicketListTicket from '../../vue/wechat/buy-ticket/list-ticket.vue';
+import InspectTicketListCompetition from '../../vue/wechat/inspect-ticket/list-competition.vue';
+import InspectTicketInspect from '../../vue/wechat/inspect-ticket/inspect.vue';
 
 export default {
 
     consoleSubRoutes: {
-        '/competition/wechat/list': {
-            component: List
+        '/competition/wechat/buy-ticket/competition/list': {
+            component: BuyTicketListCompetition
         },
-        '/competition/:id/wechat/ticket/list': {
-            component: TicketList
+        '/competition/wechat/buy-ticket/competition/:competitionId/ticket/list': {
+            component: BuyTicketListTicket
+        },
+        '/competition/wechat/inspect-ticket/competition/list': {
+            component: InspectTicketListCompetition
+        },
+        '/competition/wechat/inspect-ticket/competition/:competitionId/inspect': {
+            component: InspectTicketInspect
         }
     }
 

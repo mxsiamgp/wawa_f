@@ -68,7 +68,7 @@
         ready() {
             const that = this;
             RPC.call('competition.get', {
-                id: that.$route.params.id
+                id: that.$route.params.competitionId
             })
                     .then(failHandler(that))
                     .then((res) => {

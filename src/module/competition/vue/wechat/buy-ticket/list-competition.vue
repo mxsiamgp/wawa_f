@@ -4,8 +4,8 @@
     </group>
 </template>
 <script>
-    import RPC from '../../../rest-json-rpc/js/rest-json-rpc';
-    import failHandler from '../../../fail-handler/js/fail-handler';
+    import RPC from '../../../../rest-json-rpc/js/rest-json-rpc';
+    import failHandler from '../../../../fail-handler/js/fail-handler';
 
     export default {
         data() {
@@ -17,7 +17,7 @@
         methods: {
             ticketListLink(competitionId) {
                 return {
-                    path: `/console/competition/${competitionId}/wechat/ticket/list`
+                    path: `/console/competition/wechat/buy-ticket/competition/${competitionId}/ticket/list`
                 };
             }
         },

@@ -4,7 +4,7 @@
             <router-view></router-view>
         </div>
         <tabbar>
-            <tabbar-item v-link="{ path: '/console/competition/wechat/list' }" :selected="$route.path === '/console/competition/wechat/list'">
+            <tabbar-item v-link="{ path: '/console/competition/wechat/buy-ticket/competition/list' }" :selected="$route.path === '/console/competition/wechat/buy-ticket/competition/list'">
                 <span slot="label">门票购买</span>
             </tabbar-item>
             <tabbar-item v-link="{ path: '/console/order/wechat/my-orders' }" :selected="$route.path === '/console/order/wechat/my-orders'">

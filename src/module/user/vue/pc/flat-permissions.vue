@@ -41,11 +41,11 @@
             return {
                 flatPermissionClasses: [
                     {
-                        name: '验票',
+                        name: '赛事验票',
                         flatPermissions: [
                             {
                                 name: '验票',
-                                value: 'TICKET.INSPECT'
+                                value: 'COMPETITION.DRAWN_TICKET.INSPECT'
                             }
                         ]
                     },
