@@ -131,7 +131,10 @@
         },
 
         ready() {
+            const that = this;
+
             RPC.call('wechat.get_wechat_jssdk_config', {})
+                    .then(failHandler(that))
                     .then((res) => {
                         const cfg = res.result;
                         jWeixin.config({
