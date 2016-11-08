@@ -7,6 +7,7 @@ import {
     Cell,
     Divider,
     Group,
+    Loading,
     Panel,
     Selector,
     Tabbar,
@@ -21,6 +22,7 @@ Vue.component('box', Box);
 Vue.component('cell', Cell);
 Vue.component('divider', Divider);
 Vue.component('group', Group);
+Vue.component('loading', Loading);
 Vue.component('panel', Panel);
 Vue.component('qrcode', Qrcode);
 Vue.component('selector', Selector);
