@@ -4,7 +4,7 @@
             <cell title="商家"><div slot="value">{{form.merchant.name}}</div></cell>
             <x-input title="金额" :value.sync="form.priceYuan" v-ref:price-yuan></x-input>
             <box gap="10px 10px">
-                <x-button type="primary" :disabled="isInProgress">支付</x-button>
+                <x-button type="primary" :disabled="!form.merchant || isInProgress">支付</x-button>
                 <x-button @click.prevent="scan">扫码</x-button>
             </box>
         </form>
