@@ -38,6 +38,7 @@
                     <td>{{merchant.contactsName}}</td>
                     <td>{{merchant.contactsMobile}}</td>
                     <td>
+                        <button class="btn btn-sm" @click.prevent="getPayQrCode(merchant.id)">商家支付二维码</button>
                         <button class="btn btn-primary btn-sm" :disabled="!hasPermissions(['MERCHANT.MODIFY'])" @click.prevent="edit(merchant.id)">编辑</button>
                         <button class="btn btn-danger btn-sm" :disabled="!hasPermissions(['MERCHANT.MODIFY'])" v-confirm-button="{ confirm: $refs.deleteConfirmModal, action: deleteCarried(merchant) }">删除</button>
                     </td>
@@ -54,6 +55,7 @@
         </div>
     </div>
     <register v-ref:register></register>
+    <pay-qr-code v-ref:pay-qr-code></pay-qr-code>
     <edit v-ref:edit></edit>
     <confirm-modal title="提示" content="确认要删除这个商家？" v-ref:delete-confirm-modal></confirm-modal>
 </template>
@@ -62,6 +64,7 @@
     import _ from 'lodash';
 
     import CurrentUserMixin from '../../../user/js/current-user-mixin';
+    import PayQrCode from './pay-qr-code.vue';
     import RPC from '../../../rest-json-rpc/js/rest-json-rpc';
     import Edit from './edit.vue';
     import Register from './register.vue';
@@ -133,11 +136,16 @@
 
             edit(id) {
                 this.$refs.edit.load(id);
+            },
+
+            getPayQrCode(id) {
+                this.$refs.payQrCode.load(id);
             }
         },
 
         components: {
             Edit,
+            PayQrCode,
             Register
         }
     }

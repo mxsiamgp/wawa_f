@@ -1,6 +1,7 @@
 'use strict';
 
 import competitionRoutes from '../../competition/js/wechat/routes';
+import merchantRoutes from '../../merchant/js/wechat/routes';
 import orderRoutes from '../../order/js/wechat/routes';
 import userRoutes from '../../user/js/wechat/routes';
 
@@ -21,6 +22,7 @@ import userRoutes from '../../user/js/wechat/routes';
  */
 export default [
     competitionRoutes,
+    merchantRoutes,
     orderRoutes,
     userRoutes,
 ];
