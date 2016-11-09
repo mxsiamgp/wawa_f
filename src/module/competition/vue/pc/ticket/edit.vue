@@ -18,11 +18,8 @@
                                 <input class="form-control" v-model="form.description">
                             </div>
                             <div class="form-group" :class="{ 'has-error': $validation.priceYuan.invalid }">
-                                <label>价钱</label>
-                                <div class="input-group">
-                                    <input class="form-control" type="number" v-validate:price-yuan="{ required: true, min: 1 }" v-model="priceYuan">
-                                    <span class="input-group-addon">.00</span>
-                                </div>
+                                <label>金额</label>
+                                <input class="form-control" v-validate:price-yuan="{ required: true }" v-model="form.priceYuan">
                             </div>
                             <div>
                                 <button class="btn btn-primary btn-block" type="submit" :disabled="$validation.invalid">保存</button>
@@ -45,33 +42,34 @@
                 form: {
                     name: '',
                     description: '',
-                    priceFee: 100
+                    priceYuan: '0.00'
                 },
                 ticket: null
             };
         },
 
-        computed: {
-            priceYuan: {
-                get() {
-                    return new BigNumber(this.form.priceFee).div(100).toString();
-                },
-                set(v) {
-                    this.form.priceFee = parseInt(v) * 100;
-                }
-            }
-        },
-
         methods: {
             load(ticket) {
-                console.log(ticket);
-                _.assign(this.form, _.pick(ticket, ['name', 'description', 'priceFee']));
+                _.assign(this.form, _.pick(ticket, ['name', 'description']));
+                this.form.priceYuan = new BigNumber(ticket.priceFee).div(100).toString();
                 this.ticket = ticket;
                 $(this.$els.modal).modal('show');
             },
 
             save() {
-                _.assign(this.ticket, _.pick(this.form, ['name', 'description', 'priceFee']));
+                if (!/^\d+(\.\d{1,2})?$/.test(this.form.priceYuan)) {
+                    this.$dispatch('alertFail', '请填写正确的金额');
+                    return;
+                }
+                const priceFee = new BigNumber(this.form.priceYuan).mul(100);
+                if (priceFee.isZero()) {
+                    this.$dispatch('alertFail', '金额不能为0.00');
+                    return;
+                }
+
+                _.assign(this.ticket, _.merge(_.pick(this.form, ['name', 'description']), {
+                    priceFee: priceFee.toNumber()
+                }));
                 $(this.$els.modal).modal('hide');
             }
         }
