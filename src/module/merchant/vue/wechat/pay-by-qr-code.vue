@@ -4,7 +4,7 @@
             <cell title="商家"><div slot="value">{{form.merchant.name}}</div></cell>
             <x-input title="金额" :value.sync="form.priceYuan" v-ref:price-yuan></x-input>
             <box gap="10px 10px">
-                <x-button type="primary" :disabled="!form.merchant || isInProgress">支付</x-button>
+                <x-button type="primary" :disabled="!form.merchant">支付</x-button>
                 <x-button @click.prevent="scan">扫码</x-button>
             </box>
         </form>
@@ -13,14 +13,18 @@
 <script>
     import BigNumber from 'bignumber.js';
 
+    import CurrentUserMixin from '../../../user/js/current-user-mixin';
     import RPC from '../../../rest-json-rpc/js/rest-json-rpc';
     import failHandler from '../../../fail-handler/js/fail-handler';
     import jWeixin from '../../../wechat-jssdk/js/wechat-jssdk';
 
     export default {
+        mixins: [CurrentUserMixin('user.get_current_wechat_user')],
+
         data() {
             return {
                 form: {
+                    competitionId: null,
                     merchant: null,
                     priceYuan: '0'
                 },
@@ -36,9 +40,10 @@
                     needResult: 1,
                     scanType: ['qrCode'],
                     success: (res) => {
-                        const merchantId = res.resultStr;
+                        const scanResult = JSON.parse(res.resultStr);
+                        that.form.competitionId = scanResult.competitionId;
                         RPC.call('merchant.get', {
-                            id: merchantId
+                            id: scanResult.merchantId
                         })
                                 .then(failHandler(that))
                                 .then((res) => {
@@ -55,6 +60,23 @@
                     that.$dispatch('alertFail', '请填写正确的金额');
                     return;
                 }
+                const priceFee = new BigNumber(this.form.priceYuan).mul(100);
+                if (priceFee.isZero()) {
+                    this.$dispatch('alertFail', '金额不能为0.00');
+                    return;
+                }
+
+                RPC.call('merchant.create_merchant_order', {
+                    competitionId: that.form.competitionId,
+                    merchantId: that.form.merchant.id,
+                    priceFee: priceFee.toNumber(),
+                    userId: that.currentUser.id
+                })
+                        .then(failHandler(that))
+                        .then(() => {
+                            that.$dispatch('alertOk', '已创建订单');
+                            that.$router.go('/console/order/wechat/my-orders?payFirst=true');
+                        });
             }
         },
 

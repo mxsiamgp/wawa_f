@@ -62,7 +62,21 @@
 
         events: {
             'user.currentUserLoaded': (vm) => {
-                vm.next(false);
+                RPC.call('wechat.get_wechat_jssdk_config', {})
+                        .then(failHandler(vm))
+                        .then((res) => {
+                            const cfg = res.result;
+                            jWeixin.config({
+                                appId: cfg.appId,
+                                timestamp: cfg.timestamp,
+                                nonceStr: cfg.nonceString,
+                                signature: cfg.signature,
+                                jsApiList: ['chooseWXPay']
+                            });
+                            jWeixin.ready(() => {
+                                vm.next(false);
+                            });
+                        });
             }
         },
 
@@ -73,10 +87,14 @@
 
             orderTitle(order) {
                 return _.join(_.map(order.items, (item) => {
-                    if (item.sellableType === 'COMPETITION.TICKET') {
-                        return JSON.parse(item.sellableValue).ticket_name;
+                    switch (item.sellableType) {
+                        case 'COMPETITION.TICKET':
+                            return JSON.parse(item.sellableValue).ticket_name;
+                        case 'PAYMENT_TO_MERCHANT':
+                            return `给商家[${item.sellableValue}]付款`;
+                        default:
+                            throw new Error('未识别的订单项目类型');
                     }
-                    throw new Error('未识别的订单项目类型');
                 }), '/');
             },
 
@@ -101,22 +119,24 @@
                                 that.lastId = _.last(orders).id;
                             }
                             that.orders.push(...orders);
+                            if (!isNext && that.$route.query.payFirst && that.orders.length !== 0) {
+                                that.pay(that.orders[0]);
+                            }
                         });
             },
 
             pay(order) {
                 const that = this;
-                that.isPayInProgress = true;
-                RPC.call('order.pay_by_wechat_h5', {
-                    orderId: order.id
-                })
-                        .always(() => {
-                            that.isPayInProgress = false;
-                        })
-                        .then(failHandler(that))
-                        .then((res) => {
-                            const prepayId = res.result;
-                            jWeixin.ready(() => {
+                    that.isPayInProgress = true;
+                    RPC.call('order.pay_by_wechat_h5', {
+                        orderId: order.id
+                    })
+                            .always(() => {
+                                that.isPayInProgress = false;
+                            })
+                            .then(failHandler(that))
+                            .then((res) => {
+                                const prepayId = res.result;
                                 that.isPayInProgress = true;
                                 RPC.call('wechat_pay.get_wechat_pay_jssdk_config', {
                                     prepayId
@@ -138,26 +158,8 @@
                                                 }
                                             });
                                         });
-                            });
-                        });
+                });
             }
-        },
-
-        ready() {
-            const that = this;
-
-            RPC.call('wechat.get_wechat_jssdk_config', {})
-                    .then(failHandler(that))
-                    .then((res) => {
-                        const cfg = res.result;
-                        jWeixin.config({
-                            appId: cfg.appId,
-                            timestamp: cfg.timestamp,
-                            nonceStr: cfg.nonceString,
-                            signature: cfg.signature,
-                            jsApiList: ['chooseWXPay']
-                        });
-                    });
         }
     }
 </script>

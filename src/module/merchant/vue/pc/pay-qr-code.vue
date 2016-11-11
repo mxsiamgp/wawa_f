@@ -7,8 +7,16 @@
                     <h3 class="modal-title">商家支付二维码</h3>
                 </div>
                 <div class="modal-body">
+                    <div class="input-group">
+                        <select class="form-control" v-model="competitionId">
+                            <option :value="competition.id" v-for="competition in competitions">{{competition.name}}</option>
+                        </select>
+                        <span class="input-group-btn">
+                            <button class="btn" @click.prevent="generate">生成</button>
+                        </span>
+                    </div>
                     <div style="text-align: center">
-                        <img :src="url()">
+                        <img :src="qrCodeUrl">
                     </div>
                 </div>
             </div>
@@ -19,10 +27,16 @@
     import URI from 'urijs';
     import $ from 'jquery';
 
+    import RPC from '../../../rest-json-rpc/js/rest-json-rpc';
+    import failHandler from '../../../fail-handler/js/fail-handler';
+
     export default {
         data() {
             return {
-                merchantId: ''
+                competitionId: null,
+                competitions: [],
+                merchantId: null,
+                qrCodeUrl: ''
             };
         },
 
@@ -32,16 +46,28 @@
                 $(this.$els.modal).modal('show');
             },
 
-            url() {
-                return new URI({
+            generate() {
+                this.qrCodeUrl = new URI({
                     protocol: 'http',
                     hostname: 'pan.baidu.com'
                 }).pathname('/share/qrcode').query({
                     w: 320,
                     h: 320,
-                    url: this.merchantId
+                    url: JSON.stringify({
+                        competitionId: this.competitionId,
+                        merchantId: this.merchantId
+                    })
                 }).toString();
             }
+        },
+
+        ready() {
+            const that = this;
+            RPC.call('competition.list_in_progress', {})
+                    .then(failHandler(that))
+                    .then((res) => {
+                        that.competitions = res.result;
+                    });
         }
     };
 </script>
